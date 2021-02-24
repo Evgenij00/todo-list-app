@@ -8,7 +8,7 @@ export const AddItem = () => {
   return (
     <div className='add-item'>
       <div className='add-item__input'>
-        <input type='text' placeholder='Добавить todo' />
+        <input type='text' placeholder='Добавить новую задачу' />
       </div>
       <div className='add-item__btn-add'>
         <Button variant="outline-success">
