@@ -1,0 +1,46 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* TODO использовать flex-basis */
+  width: 500px;
+
+  margin: 0 auto 10px;
+}
+
+.item__content {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: 1px solid rgb(61, 60, 61);
+  border-radius: 4px;
+}
+
+.item__text {
+  padding: 5px 5px 5px 10px;
+  flex-grow: 1;
+}
+
+.item__text input {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
+.item__text_done input {
+  text-decoration: line-through;
+  font-style: italic;
+  color: green;
+}
+
+.item__btn-change {
+  margin-right: 5px;
+}
+
+.item__btn-ok {
+  margin-right: 5px;
+}
