@@ -4,7 +4,7 @@ import './Todo.css'
 
 import Button from 'react-bootstrap/Button'
 
-export const Todo = () => {
+export const Todo = ({todo}) => {
   return (
     <div className='item'>
       <div className='item__content'>
@@ -13,7 +13,7 @@ export const Todo = () => {
         </div>
         
         <div className='item__text'>
-          <input type='text' defaultValue='Выпить кофе'/>
+          <input type='text' defaultValue={todo.name}/>
         </div>
 
         {/* <div className='item__btn-ok'>
