@@ -4,14 +4,18 @@ import { Todo } from '../Todo/Todo'
 
 import './Todos.css'
 
-export const Todos = ( {todos, onChangeToggle} ) => {
+export const Todos = ( {todos, onChangeToggle, onClickBtnChangeTodo} ) => {
   return (
     <ul className='list'>
       {
         todos.map( todo => {
           return (
             <li key={todo.id}>
-              <Todo todo={todo} onChangeToggle={onChangeToggle}/>
+              <Todo 
+                todo={todo} 
+                onChangeToggle={onChangeToggle}
+                onClickBtnChangeTodo={onClickBtnChangeTodo}
+              />
             </li>
           )
         })

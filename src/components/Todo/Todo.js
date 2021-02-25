@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 
 import './Todo.css'
 
-export const Todo = ( {todo, onChangeToggle} ) => {
+export const Todo = ( {todo, onChangeToggle, onClickBtnChangeTodo} ) => {
   
   let classes = 'item__text'
 
@@ -12,41 +12,46 @@ export const Todo = ( {todo, onChangeToggle} ) => {
     classes += ' item__text_done'
   }
 
+  let btns = ''
+
+  if (!todo.readOnly) {
+    btns = <>
+      <Button className='item__btn-ok' variant="outline-success">Ok</Button>
+      <Button className='item__btn-cancel' variant="outline-secondary">cancel</Button>
+    </>
+  }
+
   return (
     <div className='item'>
       <div className='item__content'>
         <div className='item__checkbox'>
-          <input type='checkbox' checked={todo.done} onChange={ () => onChangeToggle(todo.id) }/>
+          <input type='checkbox' 
+            checked={todo.done} 
+            onChange={ () => onChangeToggle(todo.id) }
+          />
         </div>
         
         <div className={classes}>
           <input type='text' defaultValue={todo.name}/>
         </div>
 
-        {/* <div className='item__btn-ok'>
-          <Button variant="outline-success">
-            Ok
-          </Button>
-        </div>
-
-        <div className='item__btn-cancel'>
-          <Button variant="outline-secondary">
-            cancel
-          </Button>
-        </div> */}
+        {btns}
       </div>
 
-      <div className='item__btn-change'>
-        <Button variant="outline-primary">
-          <i className="fas fa-pencil-alt"></i>
-        </Button>
-      </div>
-      
-      <div className='item__btn-delete'>
-        <Button variant="outline-danger">
-          <i className="far fa-trash-alt"></i>
-        </Button>
-      </div>
+      <Button 
+        className='item__btn-change' 
+        variant="outline-primary" 
+        onClick={ () => onClickBtnChangeTodo(todo.id) }
+      >
+        <i className="fas fa-pencil-alt"></i>
+      </Button>
+    
+      <Button 
+        className='item__btn-delete' 
+        variant="outline-danger"
+      >
+        <i className="far fa-trash-alt"></i>
+      </Button>
 
     </div>
   )

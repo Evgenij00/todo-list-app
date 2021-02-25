@@ -19,25 +19,27 @@ function App() {
   const [todos, setTodos] = useState(list)
 
   function onChangeToggle(todoId) {
+    setTodos( state => getUpdateTodos(todoId, 'done', state))
+  }
 
-    setTodos( state => {
+  function onClickBtnChangeTodo(todoId) {
+    setTodos( state => getUpdateTodos(todoId, 'readOnly', state))
+  }
 
-      const oldTodo = state.find( todo => todo.id === todoId )
+  function getUpdateTodos(id, property, list) {
+      const findItem = list.find( item => item.id === id )
+      const updateItem = {...findItem, [property]: !findItem[property]}
 
-      const newTodo = Object.assign({}, oldTodo)
-      newTodo.done = !newTodo.done;
+      const one = list.slice(0, id)
+      const two = list.slice(id + 1)
 
-      const one = state.slice(0, todoId)
-      const two = state.slice(todoId + 1)
-
-      const updateTodos = [
+      const updateList = [
         ...one,
-        newTodo,
+        updateItem,
         ...two,
       ]
 
-      return updateTodos
-    })
+      return updateList
   }
 
   return (
@@ -46,7 +48,11 @@ function App() {
       <div className='container'>
         <AddItem />
         <Switcher />
-        <Todos todos={todos} onChangeToggle={onChangeToggle}/>
+        <Todos 
+          todos={todos} 
+          onChangeToggle={onChangeToggle}
+          onClickBtnChangeTodo={onClickBtnChangeTodo}
+        />
       </div>
     </div>
   );
