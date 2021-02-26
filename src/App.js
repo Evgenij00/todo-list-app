@@ -29,6 +29,24 @@ function App() {
     })
   }
 
+  function removeTodo(todoId) {
+    setTodos( state => {
+
+      const findTodo = state.find( todo => todo.id === todoId )
+
+      const index = state.indexOf(findTodo)
+      const one = state.slice(0, index)
+      const two = state.slice(index + 1)
+
+      const updateTodos = [
+        ...one,
+        ...two,
+      ]
+
+      return updateTodos
+    })
+  }
+
   function onChangeTitleTodo(todoId, title) {
     setTodos( state => {
       const oldTodo = state.find( todo => todo.id === todoId )
@@ -80,6 +98,7 @@ function App() {
           todos={todos} 
           onChangeToggle={onChangeToggle}
           onChangeTitleTodo={onChangeTitleTodo}
+          removeTodo={removeTodo}
         />
       </div>
     </div>

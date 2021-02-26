@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 
 import './Todo.css'
 
-export const Todo = ( {todo, onChangeToggle, onChangeTitleTodo} ) => {
+export const Todo = ( {todo, onChangeToggle, onChangeTitleTodo, removeTodo} ) => {
 
   const [title, setTitle] = useState(todo.title)
   
@@ -32,7 +32,9 @@ export const Todo = ( {todo, onChangeToggle, onChangeTitleTodo} ) => {
         </div>
       </div>
 
-      <Button className='item__btn-delete' variant="outline-danger">
+      <Button className='item__btn-delete' variant="outline-danger"
+        onClick={ () => removeTodo(todo.id) }
+      >
         <i className="far fa-trash-alt"></i>
       </Button>
     </div>

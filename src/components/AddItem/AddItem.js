@@ -9,8 +9,13 @@ export const AddItem = ( {addTodo} ) => {
   const [title, setTitle] = useState('')
 
   function changeInput(title) {
-    addTodo(title)
-    setTitle('')
+
+    if (title.trim()) {
+      addTodo(title)
+      setTitle('')
+    } else {
+      alert('Введите название Todo')
+    }
   }
 
   return (

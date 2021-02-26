@@ -4,7 +4,7 @@ import { Todo } from '../Todo/Todo'
 
 import './Todos.css'
 
-export const Todos = ( {todos, onChangeToggle, onChangeTitleTodo} ) => {
+export const Todos = ( {todos, onChangeToggle, onChangeTitleTodo, removeTodo} ) => {
   
   return (
     <ul className='list'>
@@ -16,6 +16,7 @@ export const Todos = ( {todos, onChangeToggle, onChangeTitleTodo} ) => {
                 todo={todo} 
                 onChangeToggle={onChangeToggle}
                 onChangeTitleTodo={onChangeTitleTodo}
+                removeTodo={removeTodo}
               />
             </li>
           )
