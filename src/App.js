@@ -11,19 +11,35 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
   const list = [
-    {id: 0, name: 'Проснуться', done: false, readOnly: true },
-    {id: 1, name: 'Позавтракать', done: false, readOnly: true },
-    {id: 2, name: 'Помыть посуду', done: false, readOnly: true },
+    {id: 0, title: 'Проснуться', done: false },
+    {id: 1, title: 'Позавтракать', done: false },
+    {id: 2, title: 'Помыть посуду', done: false },
   ]
 
   const [todos, setTodos] = useState(list)
 
-  function onChangeToggle(todoId) {
-    setTodos( state => getUpdateTodos(todoId, 'done', state))
+  function onChangeTitleTodo(todoId, title) {
+    setTodos( state => {
+      const oldTodo = state.find( todo => todo.id === todoId )
+      const newTodo = {...oldTodo, title}
+
+      console.log(newTodo)
+
+      const one = state.slice(0, todoId)
+      const two = state.slice(todoId + 1)
+
+      const updateTodos = [
+        ...one,
+        newTodo,
+        ...two,
+      ]
+
+      return updateTodos
+    })
   }
 
-  function onClickBtnChangeTodo(todoId) {
-    setTodos( state => getUpdateTodos(todoId, 'readOnly', state))
+  function onChangeToggle(todoId) {
+    setTodos( state => getUpdateTodos(todoId, 'done', state))
   }
 
   function getUpdateTodos(id, property, list) {
@@ -51,7 +67,7 @@ function App() {
         <Todos 
           todos={todos} 
           onChangeToggle={onChangeToggle}
-          onClickBtnChangeTodo={onClickBtnChangeTodo}
+          onChangeTitleTodo={onChangeTitleTodo}
         />
       </div>
     </div>

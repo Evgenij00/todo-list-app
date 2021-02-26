@@ -4,7 +4,8 @@ import { Todo } from '../Todo/Todo'
 
 import './Todos.css'
 
-export const Todos = ( {todos, onChangeToggle, onClickBtnChangeTodo} ) => {
+export const Todos = ( {todos, onChangeToggle, onChangeTitleTodo} ) => {
+  
   return (
     <ul className='list'>
       {
@@ -14,7 +15,7 @@ export const Todos = ( {todos, onChangeToggle, onClickBtnChangeTodo} ) => {
               <Todo 
                 todo={todo} 
                 onChangeToggle={onChangeToggle}
-                onClickBtnChangeTodo={onClickBtnChangeTodo}
+                onChangeTitleTodo={onChangeTitleTodo}
               />
             </li>
           )
