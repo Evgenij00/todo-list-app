@@ -18,15 +18,25 @@ function App() {
 
   const [todos, setTodos] = useState(list)
 
+  function addTodo( title ) {
+    const id = new Date().getTime()
+    const newTodo = {id, title, done: false }
+
+    setTodos( state => {
+      const updateTodos = [...state, newTodo]
+
+      return updateTodos
+    })
+  }
+
   function onChangeTitleTodo(todoId, title) {
     setTodos( state => {
       const oldTodo = state.find( todo => todo.id === todoId )
       const newTodo = {...oldTodo, title}
 
-      console.log(newTodo)
-
-      const one = state.slice(0, todoId)
-      const two = state.slice(todoId + 1)
+      const index = state.indexOf(newTodo)
+      const one = state.slice(0, index)
+      const two = state.slice(index + 1)
 
       const updateTodos = [
         ...one,
@@ -43,11 +53,13 @@ function App() {
   }
 
   function getUpdateTodos(id, property, list) {
+
       const findItem = list.find( item => item.id === id )
       const updateItem = {...findItem, [property]: !findItem[property]}
 
-      const one = list.slice(0, id)
-      const two = list.slice(id + 1)
+      const index = list.indexOf(findItem)
+      const one = list.slice(0, index)
+      const two = list.slice(index + 1)
 
       const updateList = [
         ...one,
@@ -62,7 +74,7 @@ function App() {
     <div className="App">
       <Header />
       <div className='container'>
-        <AddItem />
+        <AddItem addTodo={addTodo}/>
         <Switcher />
         <Todos 
           todos={todos} 
