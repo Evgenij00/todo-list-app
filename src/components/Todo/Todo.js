@@ -4,9 +4,14 @@ import Button from 'react-bootstrap/Button'
 
 import './Todo.css'
 
-export const Todo = ( {todo, onChangeToggle, onChangeTitleTodo, removeTodo} ) => {
+export const Todo = ({ todo, changeStatusTodo, changeTitleTodo, removeTodo }) => {
 
   const [title, setTitle] = useState(todo.title)
+
+  function onChangeTitleTodo(title) {
+    setTitle(title)
+    changeTitleTodo(todo.id, title)
+  }
   
   let classes = 'item__text'
 
@@ -20,14 +25,15 @@ export const Todo = ( {todo, onChangeToggle, onChangeTitleTodo, removeTodo} ) =>
         <div className='item__checkbox'>
           <input type='checkbox' 
             checked={todo.done} 
-            onChange={ () => onChangeToggle(todo.id) }
+            onChange={ () => changeStatusTodo(todo.id) }
           />
         </div>
         
         <div className={classes}>
-          <input type='text' 
+          <input type='text'
+            readOnly={todo.done}
             value={title} 
-            onChange={ (event) => setTitle(event.target.value) }
+            onChange={ (e) => onChangeTitleTodo(e.target.value) }
           />
         </div>
       </div>
