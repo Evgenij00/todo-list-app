@@ -7,16 +7,18 @@ import './Todo.css'
 export const Todo = ({ todo, changeStatusTodo, changeTitleTodo, removeTodo }) => {
 
   const [title, setTitle] = useState(todo.title)
-
-  function onChangeTitleTodo(title) {
-    setTitle(title)
-    changeTitleTodo(todo.id, title)
-  }
   
   let classes = 'item__text'
+  let btn = null
 
   if (todo.done) {
     classes += ' item__text_done'
+  } else if ( todo.title !== title ) {
+    btn = (
+      <Button variant="outline-success" size="sm"
+        onClick={ () => changeTitleTodo(todo.id, title) } 
+      >Сохранить</Button>
+    )
   }
 
   return (
@@ -33,8 +35,9 @@ export const Todo = ({ todo, changeStatusTodo, changeTitleTodo, removeTodo }) =>
           <input type='text'
             readOnly={todo.done}
             value={title} 
-            onChange={ (e) => onChangeTitleTodo(e.target.value) }
+            onChange={ (e) => setTitle(e.target.value) }
           />
+          {btn}
         </div>
       </div>
 

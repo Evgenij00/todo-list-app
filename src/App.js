@@ -128,7 +128,7 @@ function App() {
       <div className='container'>
         <AddTodo addTodo={addTodo}/>
         <Search onSearchTodo={onSearchTodo} clearSearch={clearSearch} string={searchString}/>
-        <Switcher onFilterTodo={onFilterTodo} doneCount={doneCount} processCount={processCount}/>
+        <Switcher onFilterTodo={onFilterTodo}  doneCount={doneCount} processCount={processCount}/>
         <Todos 
           todos={searchTodos} 
           changeStatusTodo={changeStatusTodo}

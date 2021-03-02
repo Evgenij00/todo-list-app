@@ -21,11 +21,13 @@
 }
 
 .item__text {
+  display: flex;
   padding: 5px 5px 5px 10px;
   flex-grow: 1;
 }
 
 .item__text input {
+  flex-grow: 1;
   width: 100%;
   border: none;
   outline: none;
