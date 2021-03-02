@@ -92,6 +92,10 @@ function App() {
     setSearchString(string)
   }
 
+  function clearSearch() {
+    setSearchString('')
+  }
+
   function searchTodo(subtitle) {
     const searchTodos = todos.filter( todo => todo.title.toLowerCase().includes(subtitle.toLowerCase()))
 
@@ -105,7 +109,7 @@ function App() {
       <Header/>
       <div className='container'>
         <AddTodo addTodo={addTodo}/>
-        <Search onSearchTodo={onSearchTodo} />
+        <Search onSearchTodo={onSearchTodo} clearSearch={clearSearch} string={searchString}/>
         <Switcher />
         <Todos 
           todos={searchTodos} 

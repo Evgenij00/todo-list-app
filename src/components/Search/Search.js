@@ -20,20 +20,20 @@ export const Search = ({ onSearchTodo, clearSearch, string }) => {
     }
   }
 
-  // let viewSearchString = null
+  let viewSearchString = null
 
-  // if (string.trim()) {
-  //   viewSearchString = (
-  //     <div className="result">
-  //       <div className='result__text'><span>{string}</span></div>
-  //       <Button className='result__btn-cross' variant="outline-danger" size="sm"
-  //           onClick={ () => clearSearch() }
-  //       >
-  //         <i className="far fa-times-circle"></i>
-  //       </Button>
-  //     </div>
-  //   )
-  // }
+  if (string.trim()) {
+    viewSearchString = (
+      <div className="result">
+        <div className='result__text'><span>{string}</span></div>
+        <Button className='result__btn-cross' variant="outline-danger" size="sm"
+            onClick={ () => clearSearch() }
+        >
+          <i className="far fa-times-circle"></i>
+        </Button>
+      </div>
+    )
+  }
 
   return (
     <div className='form-search-wrap'>
@@ -46,6 +46,7 @@ export const Search = ({ onSearchTodo, clearSearch, string }) => {
           onClick={ onClickSearchBtn }
         >Search</Button>
       </Form>
+      {viewSearchString}
     </div>
   )
 }
