@@ -1,0 +1,28 @@
+.form-search-wrap {
+  display: flex;
+  width: 500px;
+  margin: 10px auto 0;
+}
+
+.form-search {
+
+}
+
+.result {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 10px;
+}
+
+.result__text {
+  padding: 0 10px;
+}
+
+.result__text span {
+  color: rgb(107, 107, 107);;
+  border-bottom: 1px solid rgb(107, 107, 107);
+}
+
+.result__btn-cross {
+  
+}

@@ -2,11 +2,12 @@ import { useState } from 'react';
 
 import { Header } from './components/Header/Header';
 import { Todos } from './components/Todos/Todos';
-import { AddItem } from './components/AddItem/AddItem';
+import { AddTodo } from './components/AddTodo/AddTodo';
 import { Switcher } from './components/Switcher/Switcher';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Search } from './components/Search/Search';
 
 function App() {
 
@@ -17,8 +18,9 @@ function App() {
   ]
 
   const [todos, setTodos] = useState(list)
+  const [searchString, setSearchString] = useState('')
 
-  function addTodo( title ) {
+  function addTodo(title) {
     const id = new Date().getTime()
     const newTodo = {id, title, done: false }
 
@@ -32,72 +34,87 @@ function App() {
   function removeTodo(todoId) {
     setTodos( state => {
 
-      const findTodo = state.find( todo => todo.id === todoId )
+      const currentTodo = state.find( todo => todo.id === todoId )
 
-      const index = state.indexOf(findTodo)
-      const one = state.slice(0, index)
-      const two = state.slice(index + 1)
+      const index = state.indexOf(currentTodo)
+      const onePart = state.slice(0, index)
+      const twoPart = state.slice(index + 1)
 
       const updateTodos = [
-        ...one,
-        ...two,
+        ...onePart,
+        ...twoPart,
       ]
 
       return updateTodos
     })
   }
 
-  function onChangeTitleTodo(todoId, title) {
+  function changeTitleTodo( todoId, title ) {
     setTodos( state => {
-      const oldTodo = state.find( todo => todo.id === todoId )
-      const newTodo = {...oldTodo, title}
+      const currentTodo = state.find( todo => todo.id === todoId )
+      const newTodo = {...currentTodo, title}
 
-      const index = state.indexOf(newTodo)
-      const one = state.slice(0, index)
-      const two = state.slice(index + 1)
+      const index = state.indexOf(currentTodo)
+      const onePart = state.slice(0, index)
+      const twoPart = state.slice(index + 1)
 
       const updateTodos = [
-        ...one,
+        ...onePart,
         newTodo,
-        ...two,
+        ...twoPart,
       ]
 
       return updateTodos
     })
   }
 
-  function onChangeToggle(todoId) {
-    setTodos( state => getUpdateTodos(todoId, 'done', state))
-  }
+  function changeStatusTodo(todoId) {
 
-  function getUpdateTodos(id, property, list) {
+    setTodos( state => {
+      const currentTodo = state.find( item => item.id === todoId )
+      const newTodo = {...currentTodo, done: !currentTodo.done}
 
-      const findItem = list.find( item => item.id === id )
-      const updateItem = {...findItem, [property]: !findItem[property]}
+      const index = state.indexOf(currentTodo)
+      const onePart = state.slice(0, index)
+      const twoPart = state.slice(index + 1)
 
-      const index = list.indexOf(findItem)
-      const one = list.slice(0, index)
-      const two = list.slice(index + 1)
-
-      const updateList = [
-        ...one,
-        updateItem,
-        ...two,
+      const updateTodos = [
+        ...onePart,
+        newTodo,
+        ...twoPart,
       ]
 
-      return updateList
+      return updateTodos
+    })
   }
+
+  function onSearchTodo(string) {
+    setSearchString(string)
+  }
+
+  function clearSearch() {
+    setSearchString('')
+  }
+
+  function searchTodo(subtitle) {
+    const searchTodos = todos.filter( todo => todo.title.toLowerCase().includes(subtitle.toLowerCase()))
+
+    return searchTodos
+  }
+
+  const searchTodos = (searchString.trim()) ? searchTodo(searchString) : todos
 
   return (
     <div className="App">
-      <Header />
+      <Header/>
       <div className='container'>
-        <AddItem addTodo={addTodo}/>
+        <AddTodo addTodo={addTodo}/>
+        <Search onSearchTodo={onSearchTodo} clearSearch={clearSearch} string={searchString}/>
         <Switcher />
         <Todos 
-          todos={todos} 
-          onChangeToggle={onChangeToggle}
-          onChangeTitleTodo={onChangeTitleTodo}
+          todos={searchTodos} 
+          changeStatusTodo={changeStatusTodo}
+          changeTitleTodo={changeTitleTodo}
           removeTodo={removeTodo}
         />
       </div>
