@@ -7,6 +7,7 @@ import { Switcher } from './components/Switcher/Switcher';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Search } from './components/Search/Search';
 
 function App() {
 
@@ -101,9 +102,10 @@ function App() {
 
   return (
     <div className="App">
-      <Header onSearchTodo={onSearchTodo}/>
+      <Header/>
       <div className='container'>
         <AddTodo addTodo={addTodo}/>
+        <Search onSearchTodo={onSearchTodo} />
         <Switcher />
         <Todos 
           todos={searchTodos} 
