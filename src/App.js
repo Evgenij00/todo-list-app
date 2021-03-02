@@ -119,13 +119,16 @@ function App() {
   const filterTodos = filterTodo(todos)
   const searchTodos = (searchString.trim()) ? searchTodo(searchString, filterTodos) : filterTodos
 
+  const doneCount = todos.filter( todo => todo.done ).length;
+  const processCount = todos.length - doneCount;
+
   return (
     <div className="App">
       <Header/>
       <div className='container'>
         <AddTodo addTodo={addTodo}/>
         <Search onSearchTodo={onSearchTodo} clearSearch={clearSearch} string={searchString}/>
-        <Switcher onFilterTodo={onFilterTodo}/>
+        <Switcher onFilterTodo={onFilterTodo} doneCount={doneCount} processCount={processCount}/>
         <Todos 
           todos={searchTodos} 
           changeStatusTodo={changeStatusTodo}
