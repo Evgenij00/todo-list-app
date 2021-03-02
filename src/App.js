@@ -19,6 +19,7 @@ function App() {
 
   const [todos, setTodos] = useState(list)
   const [searchString, setSearchString] = useState('')
+  const [filterString, setFilterString] = useState('')
 
   function addTodo(title) {
     const id = new Date().getTime()
@@ -88,6 +89,10 @@ function App() {
     })
   }
 
+  function onFilterTodo(string) {
+    setFilterString(string)
+  }
+
   function onSearchTodo(string) {
     setSearchString(string)
   }
@@ -96,13 +101,26 @@ function App() {
     setSearchString('')
   }
 
-  function searchTodo(subtitle) {
-    const searchTodos = todos.filter( todo => todo.title.toLowerCase().includes(subtitle.toLowerCase()))
-
-    return searchTodos
+  function filterTodo(list) {
+    switch(filterString) {
+      case 'done':
+        return list.filter( todo => todo.done)
+      case 'process':
+        return list.filter( todo => !todo.done )
+      default:
+        return list
+    }
   }
 
-  const searchTodos = (searchString.trim()) ? searchTodo(searchString) : todos
+  function searchTodo(string, list) {
+    return list.filter( item => item.title.toLowerCase().includes(string.toLowerCase()))
+  }
+
+  const filterTodos = filterTodo(todos)
+  const searchTodos = (searchString.trim()) ? searchTodo(searchString, filterTodos) : filterTodos
+
+  const doneCount = todos.filter( todo => todo.done ).length;
+  const processCount = todos.length - doneCount;
 
   return (
     <div className="App">
@@ -110,7 +128,7 @@ function App() {
       <div className='container'>
         <AddTodo addTodo={addTodo}/>
         <Search onSearchTodo={onSearchTodo} clearSearch={clearSearch} string={searchString}/>
-        <Switcher />
+        <Switcher onFilterTodo={onFilterTodo} doneCount={doneCount} processCount={processCount}/>
         <Todos 
           todos={searchTodos} 
           changeStatusTodo={changeStatusTodo}

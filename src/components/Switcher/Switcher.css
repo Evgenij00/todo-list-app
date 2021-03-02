@@ -1,4 +1,9 @@
-.btn-switcher {
+.switcher {
+  display: flex;
   width: 500px;
   margin: 10px auto 0;
+}
+
+.switcher__btns {
+  margin-right: 30px;
 }
