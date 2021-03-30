@@ -2,7 +2,20 @@
   box-sizing: border-box;
 }
 
-.conteiner {
-  width: 1180px;
+body {
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wrapper {
+  max-width: 600px;
+  padding-left: 10px;
+  padding-right: 10px;
   margin: 0 auto;
 }

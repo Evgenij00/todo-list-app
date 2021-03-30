@@ -1,0 +1,11 @@
+.app__roww {
+  margin-bottom: 10px;
+}
+
+.roww {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.roww__left {}
+.roww__right {}

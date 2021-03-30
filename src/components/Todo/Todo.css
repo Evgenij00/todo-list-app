@@ -1,48 +1,37 @@
 .item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  /* TODO использовать flex-basis */
-  width: 500px;
-
-  margin: 0 auto 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
-
 .item__content {
   display: flex;
+  align-items: flex-end;
   flex-grow: 1;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 10px;
-  margin-right: 5px;
-  border: 1px solid rgb(61, 60, 61);
-  border-radius: 4px;
+  margin-right: 10px;
 }
-
+.item__checkbox-box {
+  margin-right: 10px;
+}
+.item__checkbox {}
 .item__text {
-  display: flex;
-  padding: 5px 5px 5px 10px;
   flex-grow: 1;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom: 1px solid black;
 }
 
 .item__text input {
-  flex-grow: 1;
   width: 100%;
   border: none;
   outline: none;
 }
-
-.item__text_done input {
-  text-decoration: line-through;
-  font-style: italic;
+.item__text--done input {
   color: green;
+  font-style: italic;
+  text-decoration: line-through;
 }
+.item__btn-delete {}
 
-.item__btn-change {
-  margin-right: 5px;
-}
-
-.item__btn-ok {
-  margin-right: 5px;
+.item__btn-save {
+  margin-right: 10px;
 }

@@ -5,22 +5,31 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
 import './Switcher.css'
 
-export const Switcher = ({ onFilterTodo, doneCount, processCount }) => {
+export const Switcher = ({ changeFilterString, status}) => {
 
-  const statuses = [
-    {name: 'All', status: 'all'},
-    {name: 'Done', status: 'done'},
-    {name: 'In process', status: 'process'},
+  const buttons = [
+    {name: 'Все', status: 'all'},
+    {name: 'Выполнено', status: 'done'},
+    {name: 'В процессе', status: 'inProcess'},
   ]
 
-  const btns = statuses.map( (item, index) =>  <Button key={index} onClick={ () => onFilterTodo(item.status) }>{item.name}</Button>)
+  const items = buttons.map( (item, index) => {
+
+    let variant = (item.status === status) ? 'primary' : 'outline-primary'
+
+    return (
+      <Button className='switcher__btn' variant={variant} 
+        key={index} 
+        onClick={ () => changeFilterString(item.status) }>
+        {item.name}
+      </Button>
+    )
+
+  })
 
   return (
-    <div className='switcher'>
-      <ButtonGroup className='switcher__btns' size="sm">
-        {btns}
-      </ButtonGroup>
-      <div className='switcher__view'>done <span>{doneCount}</span> / in process <span>{processCount}</span></div>
-    </div>
+    <ButtonGroup className='switcher' size="sm">
+      {items}
+    </ButtonGroup>
   )
 }

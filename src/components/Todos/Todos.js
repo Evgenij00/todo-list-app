@@ -4,24 +4,22 @@ import { Todo } from '../Todo/Todo'
 
 import './Todos.css'
 
-export const Todos = ({ todos, changeStatusTodo, changeTitleTodo, removeTodo }) => {
+export const Todos = ( props ) => {
+
+  const {todos, ...configTodo} = props;
+
+  const items = todos.map( todo => {
+
+    return (
+      <li key={todo.id}>
+        <Todo todo={todo} {...configTodo} />
+      </li>
+    )
+  })
   
   return (
     <ul className='list'>
-      {
-        todos.map( todo => {
-          return (
-            <li key={todo.id}>
-              <Todo 
-                todo={todo} 
-                changeStatusTodo={changeStatusTodo}
-                changeTitleTodo={changeTitleTodo}
-                removeTodo={removeTodo}
-              />
-            </li>
-          )
-        })
-      }
+      { items }
     </ul>
   )
 }

@@ -1,0 +1,19 @@
+.app__status-panel {
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.status-panel {
+  font-size: 24px;
+  text-align: center;
+}
+
+.status-panel__done {
+  color: rgb(18, 155, 36);
+  font-weight: bold;
+}
+
+.status-panel__inprocess {
+  color: rgb(247, 145, 12);
+  font-weight: bold;
+}

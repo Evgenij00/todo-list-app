@@ -2,12 +2,16 @@ import { useState } from 'react';
 
 import { Header } from './components/Header/Header';
 import { Todos } from './components/Todos/Todos';
-import { AddTodo } from './components/AddTodo/AddTodo';
+import { AddItem } from './components/AddItem/AddItem';
 import { Switcher } from './components/Switcher/Switcher';
+import { Search } from './components/Search/Search';
+import { StatusPanel } from './components/StatusPanel/StatusPanel';
+import { Row } from './components/Row/Row';
+
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Search } from './components/Search/Search';
 
 function App() {
 
@@ -19,122 +23,111 @@ function App() {
 
   const [todos, setTodos] = useState(list)
   const [searchString, setSearchString] = useState('')
-  const [filterString, setFilterString] = useState('')
+  const [filterString, setFilterString] = useState('all')
 
-  function addTodo(title) {
+  function addItem(title) {
+    // TODO
     const id = new Date().getTime()
-    const newTodo = {id, title, done: false }
+    const newItem = {id, title, done: false }
 
-    setTodos( state => {
-      const updateTodos = [...state, newTodo]
-
-      return updateTodos
-    })
+    setTodos( state => [...state, newItem])
   }
 
-  function removeTodo(todoId) {
+  function removeItem(id) {
     setTodos( state => {
 
-      const currentTodo = state.find( todo => todo.id === todoId )
+      const currentItem = state.find( item => item.id === id )
+      const index = state.indexOf(currentItem)
 
-      const index = state.indexOf(currentTodo)
-      const onePart = state.slice(0, index)
-      const twoPart = state.slice(index + 1)
-
-      const updateTodos = [
-        ...onePart,
-        ...twoPart,
+      return [
+        ...state.slice(0, index),
+        ...state.slice(index + 1),
       ]
-
-      return updateTodos
     })
   }
 
-  function changeTitleTodo( todoId, title ) {
+  function changeTitle( id, title ) {
     setTodos( state => {
-      const currentTodo = state.find( todo => todo.id === todoId )
-      const newTodo = {...currentTodo, title}
+      const currentItem = state.find( item => item.id === id )
+      const index = state.indexOf(currentItem)
 
-      const index = state.indexOf(currentTodo)
-      const onePart = state.slice(0, index)
-      const twoPart = state.slice(index + 1)
+      const newItem = {...currentItem, title}
 
-      const updateTodos = [
-        ...onePart,
-        newTodo,
-        ...twoPart,
+      return [
+        ...state.slice(0, index),
+        newItem,
+        ...state.slice(index + 1),
       ]
-
-      return updateTodos
     })
   }
 
-  function changeStatusTodo(todoId) {
+  function changeStatus(id) {
 
     setTodos( state => {
-      const currentTodo = state.find( item => item.id === todoId )
-      const newTodo = {...currentTodo, done: !currentTodo.done}
+      const currentItem = state.find( item => item.id === id )
+      const index = state.indexOf(currentItem)
 
-      const index = state.indexOf(currentTodo)
-      const onePart = state.slice(0, index)
-      const twoPart = state.slice(index + 1)
+      const newItem = {...currentItem, done: !currentItem.done}
 
-      const updateTodos = [
-        ...onePart,
-        newTodo,
-        ...twoPart,
+      return [
+        ...state.slice(0, index),
+        newItem,
+        ...state.slice(index + 1),
       ]
-
-      return updateTodos
     })
   }
 
-  function onFilterTodo(string) {
+  function changeFilterString(string) {
     setFilterString(string)
   }
 
-  function onSearchTodo(string) {
+  function changeSearchString(string) {
     setSearchString(string)
   }
 
-  function clearSearch() {
-    setSearchString('')
-  }
-
-  function filterTodo(list) {
-    switch(filterString) {
-      case 'done':
-        return list.filter( todo => todo.done)
-      case 'process':
-        return list.filter( todo => !todo.done )
-      default:
+  function filter(list, string) {
+    switch(string) {
+      case 'all':
         return list
+      case 'done':
+        return list.filter( item => item.done)
+      case 'inProcess':
+        return list.filter( item => !item.done )
+      default:
+        throw new Error('Неверно заданы данные в фильтре!')
     }
   }
 
-  function searchTodo(string, list) {
+  function search(list, string) {
     return list.filter( item => item.title.toLowerCase().includes(string.toLowerCase()))
   }
 
-  const filterTodos = filterTodo(todos)
-  const searchTodos = (searchString.trim()) ? searchTodo(searchString, filterTodos) : filterTodos
+  const visibleTodos = filter(search(todos, searchString), filterString)
 
-  const doneCount = todos.filter( todo => todo.done ).length;
-  const processCount = todos.length - doneCount;
+  const doneCount = todos.filter( item => item.done ).length;
+  const inProcessCount = todos.length - doneCount;
+
+  const searchPanel = <Search changeSearchString={changeSearchString}/>
+  const switcher = <Switcher changeFilterString={changeFilterString} status={filterString}/>
 
   return (
-    <div className="App">
-      <Header/>
-      <div className='container'>
-        <AddTodo addTodo={addTodo}/>
-        <Search onSearchTodo={onSearchTodo} clearSearch={clearSearch} string={searchString}/>
-        <Switcher onFilterTodo={onFilterTodo}  doneCount={doneCount} processCount={processCount}/>
-        <Todos 
-          todos={searchTodos} 
-          changeStatusTodo={changeStatusTodo}
-          changeTitleTodo={changeTitleTodo}
-          removeTodo={removeTodo}
-        />
+    <div className="app">
+      <Header />
+      <div className='wrapper'>
+        <StatusPanel 
+          doneCount={doneCount} 
+          inProcessCount={inProcessCount}/>
+
+        <AddItem addItem={addItem}/>
+
+        <Row left={searchPanel} right={switcher}/>
+
+        <Todos
+          todos={visibleTodos} 
+          changeStatus={changeStatus}
+          changeTitle={changeTitle}
+          removeItem={removeItem}/>
+
       </div>
     </div>
   );
